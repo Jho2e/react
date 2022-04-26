@@ -50,9 +50,50 @@
         </div>
       );
     }
+
+    // 마일을 킬로미터(㎞)로 환산하려면 마일 수치에 1.609344를 곱하면 됩니다.
     function KmToMiles() {
-      return <h3>Km 2 M </h3>;
+      const [amount, setAmount] = React.useState(0);
+      const [inverted, setInverted] = React.useState(false);
+      const onChange = (event) => {
+        setAmount(event.target.value);
+      };
+      const reset = () => setAmount(0);
+      const onInvert = () => {
+        reset();
+        setInverted((current) => !current); //현재의 반대값
+      };
+      return (
+        <div>
+          <div>
+            <label htmlFor="km">KiloMeter</label>
+            <input
+              value={inverted ? amount * 1.609344 : amount}
+              id="km"
+              placeholder="km"
+              type="number"
+              onChange={onChange}
+              disabled={inverted}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="miles">Miles</label>
+            <input
+              value={inverted ? amount : amount / 1.609344}
+              id="miles"
+              placeholder="Miles"
+              type="number"
+              onChange={onChange}
+              disabled={!inverted}
+            />
+          </div>
+          <button onClick={reset}>Reset</button>
+          <button onClick={onInvert}>{inverted ? "y" : "n"}</button>
+        </div>
+      );
     }
+
     function App() {
       const [index, setIndex] = React.useState("xx");
       const onSelect = (event) => {
